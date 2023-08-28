@@ -1,12 +1,16 @@
+const express = require('express')
 const inquirer = require("inquirer");
-const mysql = require("mysql");
+const mysql = require("mysql2");
+
+const PORT = process.env.PORT || 3001;
+const app = express();
 
 //MySQL connection
 const connection = mysql.createConnection({
   host: "localhost",
-  user: "your_user",
-  password: "your_password",
-  database: "your_database",
+  user: "root",
+  password: "Emwlmrkew0912!",
+  database: "company_db",
 });
 
 connection.connect();
@@ -94,7 +98,6 @@ function addDepartment() {
   connection.query("SELECT * FROM departments", (err, res) => {
     if (err) throw err;
     console.table(res);
-    startApp();
   });
 }
 //Function to add a role
@@ -102,7 +105,6 @@ function addRole() {
   connection.query("SELECT * FROM roles", (err, res) => {
     if (err) throw err;
     console.table(res);
-    startApp();
   });
 }
 
@@ -112,7 +114,6 @@ function addEmployee() {
   connection.query("SELECT * FROM employees", (err, res) => {
     if (err) throw err;
     console.table(res);
-    startApp();
   });
 }
 
@@ -121,10 +122,14 @@ function updateEmployee() {
   connection.query("SELECT * FROM employees", (err, res) => {
     if (err) throw err;
     console.table(res);
-    startApp();
   });
 }
 
-//function to start app 
+function init() {
+    console.log(`You have entered 'Insert Company Name here' Database, please select what you would like to view.`);
+
+}
+
+init();
 startApp();
 
