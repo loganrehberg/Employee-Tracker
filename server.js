@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require("express");
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
 
@@ -39,26 +39,26 @@ function startApp() {
     .then((answer) => {
       //call the appropriate function based on user input
       switch (answer.action) {
-        case "View all Departments":
+        case "View all departments":
           viewDepartments();
           break;
         case "View all roles":
           viewRoles();
           break;
         case "View all employees":
-          viewRoles();
+          viewEmployees();
           break;
         case "Add a department":
-          viewRoles();
+          addDepartment();
           break;
         case "Add a role":
-          viewRoles();
+          addRole();
           break;
         case "Add an employee":
-          viewRoles();
+          addEmployee();
           break;
         case "Update an employee role":
-          viewRoles();
+          updateEmployee();
           break;
         case "Exit":
           connection.end();
@@ -95,41 +95,128 @@ function viewEmployees() {
 }
 //Function to add a department
 function addDepartment() {
-  connection.query("SELECT * FROM departments", (err, res) => {
-    if (err) throw err;
-    console.table(res);
-  });
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Enter new Department",
+        name: "department",
+      },
+    ])
+    .then((response) => {
+      connection.query(
+        "INSERT INTO departments (name) VALUES (?)",
+        response.department,
+        (err, res) => {
+          if (err) throw err;
+          viewDepartments();
+        }
+      );
+    });
 }
 //Function to add a role
 function addRole() {
-  connection.query("SELECT * FROM roles", (err, res) => {
-    if (err) throw err;
-    console.table(res);
-  });
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "enter title name",
+        name: "Title",
+      },
+      {
+        type: "input",
+        message: "Enter salary",
+        name: "Salary",
+      },
+      {
+        type: "input",
+        message: "Enter Department id",
+        name: "Department",
+      },
+    ])
+    .then((response) => {
+      connection.query(
+        "INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)",
+        [response.Title, response.Salary, response.Department],
+        (err, res) => {
+          if (err) throw err;
+          viewRoles();
+        }
+      );
+    });
 }
 
 //Function to add an employee
 
 function addEmployee() {
-  connection.query("SELECT * FROM employees", (err, res) => {
-    if (err) throw err;
-    console.table(res);
-  });
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Enter first name",
+        name: "first_name",
+      },
+      {
+        type: "input",
+        message: "Enter last name",
+        name: "last_name",
+      },
+      {
+        type: "input",
+        message: "Enter role_id",
+        name: "role_id",
+      },
+      {
+        type: "input",
+        message: "Enter manager_id",
+        name: "manager_id",
+      },
+    ])
+    .then((response) => {
+      connection.query(
+        "INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+        [
+          response.first_name,
+          response.last_name,
+          response.role_id,
+          response.manager_id,
+        ],
+        (err, res) => {
+          if (err) throw err;
+          viewEmployees();
+        }
+      );
+    });
 }
 
 //Function to update an employee role
 function updateEmployee() {
-  connection.query("SELECT * FROM employees", (err, res) => {
-    if (err) throw err;
-    console.table(res);
-  });
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Input role id",
+        name: "role_id",
+      },
+      {
+        type: "input",
+        message: "input employee id",
+        name: "employee_id",
+      },
+    ])
+    .then((response) => {
+      connection.query("UPDATE employees SET role_id = ? WHERE id = ?", [response.role_id, response.employee_id], (err, res) => {
+        if (err) throw err;
+        viewEmployees()
+      });
+    });
 }
 
 function init() {
-    console.log(`You have entered 'Insert Company Name here' Database, please select what you would like to view.`);
-
+  console.log(
+    `You have entered 'Insert Company Name here' Database, please select what you would like to view.`
+  );
 }
 
 init();
 startApp();
-

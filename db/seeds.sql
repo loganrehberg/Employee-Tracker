@@ -1,4 +1,4 @@
--- Active: 1692316061004@@127.0.0.1@3306
+-- Active: 1692316061004@@127.0.0.1@3306@company_db
 -- Insert sample departments
 INSERT INTO departments (name) VALUES
   ('Sales'),
