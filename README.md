@@ -1,6 +1,8 @@
 ## Employee Tracker
 Employee Tracker is a command-line application for managing employee data in a company. This application provides a simple and efficient way to organize employee information, including their roles, departments, and managers. This repository contains the source code and assets for the Employee Tracker.
-[![Watch the video](https://i.stack.imgur.com/Vp2cE.png)](https://drive.google.com/file/d/1U0qB0SFJvRixS7jwvwwAOqGgxoGVYy1k/view)
+
+
+[![Watch the video]()](https://drive.google.com/file/d/1U0qB0SFJvRixS7jwvwwAOqGgxoGVYy1k/view)
 
 
 ## Features
